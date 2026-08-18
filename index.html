@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dreamersPlay — Master</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#05070E">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="dreamersPlay">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Chakra+Petch:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onerror="window.__chartLoadFailed = true;"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="scanline-overlay"></div>
+
+<div class="shell">
+  <div class="chrome">
+    <div class="chrome-dots"><span></span><span></span><span></span></div>
+    <div class="chrome-tag"><span id="sessionTag">SESSION::UNAUTHENTICATED</span><button id="logoutBtn" style="display:none;">TERMINATE SESSION</button></div>
+  </div>
+
+  <div class="body-panel">
+    <header>
+      <div class="logo-row"><span class="logo">dreamersPlay</span><span class="master-badge">Master Node</span></div>
+      <div class="tagline">capital · revenue · expense — live data stream, all stations</div>
+    </header>
+
+    <div id="banner"></div>
+
+    <div id="authGate">
+      <div class="panel">
+        <h2>&gt; Access Protocol Required</h2>
+        <div class="hint">Authenticate to decrypt the master data stream.</div>
+        <div class="auth-toggle">
+          <button id="modeSignIn" class="active">SIGN IN</button>
+          <button id="modeRegister">REGISTER IDENTITY</button>
+        </div>
+        <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="Enter protocol: email_"></div>
+        <div class="field"><label>Password</label><input type="password" id="authPassword" placeholder="Enter protocol: password_"></div>
+        <div id="authError"></div>
+        <div class="btn-row"><button class="btn btn-glow cyan" id="authSubmit">AUTHENTICATE &gt;&gt;</button></div>
+      </div>
+    </div>
+
+    <div id="app" style="display:none;">
+      <div class="stats">
+        <div class="stat-card capital"><div class="stat-top"><span class="stat-label">Capital Injected</span><span class="stat-glyph">&lt;/&gt;</span></div><div class="stat-value" id="statCapital">0.00</div></div>
+        <div class="stat-card revenue"><div class="stat-top"><span class="stat-label">Revenue Stream (All)</span><span class="stat-glyph">{ }</span></div><div class="stat-value" id="statRevenue">0.00</div></div>
+        <div class="stat-card expense"><div class="stat-top"><span class="stat-label">Expense Drain (All)</span><span class="stat-glyph">[ ]</span></div><div class="stat-value" id="statExpense">0.00</div></div>
+        <div class="stat-card profit"><div class="stat-top"><span class="stat-label">Net Yield</span><span class="stat-glyph">( )</span></div><div class="stat-value" id="statNet">0.00</div><div class="stat-sub" id="statNetSub"></div></div>
+      </div>
+
+      <div class="station-row">
+        <div class="station-card">
+          <div class="station-card-head"><h4>STATION 1 <span style="color:var(--dim); font-weight:400;">(this node)</span></h4><span class="station-pill">LIVE</span></div>
+          <div class="station-metrics">
+            <div class="station-metric rev"><div class="m-label">Revenue</div><div class="m-value" id="s1Revenue">0.00</div></div>
+            <div class="station-metric exp"><div class="m-label">Expense</div><div class="m-value" id="s1Expense">0.00</div></div>
+            <div class="station-metric net"><div class="m-label">Net</div><div class="m-value" id="s1Net">0.00</div></div>
+          </div>
+        </div>
+        <div class="station-card">
+          <div class="station-card-head"><h4>STATION 2</h4><span class="station-pill" id="s2Pill">LIVE</span></div>
+          <div class="station-metrics">
+            <div class="station-metric rev"><div class="m-label">Revenue</div><div class="m-value" id="s2Revenue">0.00</div></div>
+            <div class="station-metric exp"><div class="m-label">Expense</div><div class="m-value" id="s2Expense">0.00</div></div>
+            <div class="station-metric net"><div class="m-label">Net</div><div class="m-value" id="s2Net">0.00</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="overview">OVERVIEW</button>
+        <button class="tab-btn" data-tab="daily">STATION 1 UPLINK</button>
+        <button class="tab-btn" data-tab="capital">CAPITAL UPLINK</button>
+        <button class="tab-btn" data-tab="station2">STATION 2 LOG</button>
+      </div>
+
+      <div class="tabview" data-view="overview">
+        <div class="panel">
+          <h3>&gt; Data Visualization: Revenue vs. Expense Trend (Combined)</h3>
+          <div class="hint">Daily stream across both stations, most recent activity.</div>
+          <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="chart-grid two">
+          <div class="panel">
+            <h3>&gt; Cumulative Net Yield</h3>
+            <div class="hint">Running total: revenue − capital − expense, over time.</div>
+            <div class="chart-wrap small"><canvas id="cumulativeChart"></canvas></div>
+          </div>
+          <div class="panel">
+            <h3>&gt; Stream Composition</h3>
+            <div class="hint">Proportional breakdown, all-time.</div>
+            <div class="chart-wrap small"><canvas id="compositionChart"></canvas></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>&gt; Station Comparison</h3>
+          <div class="hint">Revenue and expense, side by side, all-time.</div>
+          <div class="chart-wrap small"><canvas id="stationChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="yield-title"><span class="glyph" style="color:var(--magenta); text-shadow:0 0 8px rgba(255,79,216,.7);">{ }</span><h3>Operating Yield</h3></div>
+          <div class="yield-value" id="opYield">0.00</div>
+          <div class="yield-desc">&gt; combined revenue minus combined expense drain, both stations. capital excluded from this calculation.</div>
+        </div>
+        <div class="panel">
+          <div class="yield-title"><span class="glyph" style="color:var(--soft); text-shadow:0 0 8px rgba(185,140,255,.7);">( )</span><h3>Net Position vs. Capital</h3></div>
+          <div class="yield-value" id="netYield">0.00</div>
+          <div class="yield-desc" id="netYieldDesc"></div>
+        </div>
+      </div>
+
+      <div class="tabview" data-view="daily" style="display:none;">
+        <div class="panel">
+          <h3>&gt; Initiate Data Injection: Station 1 Daily Log</h3>
+          <div class="hint">Push today's numbers, or backfill missed days — stack rows and inject them together.</div>
+          <div id="dailyRows"></div>
+          <div id="dailyError"></div>
+          <div class="btn-row"><button class="btn" id="dailyAddRow">+ APPEND ROW</button><button class="btn btn-glow cyan" id="dailySave">EXECUTE INJECTION &gt;&gt;</button></div>
+        </div>
+        <div class="panel"><h3>Stream Log</h3><div class="stream-list" id="dailyList"></div></div>
+      </div>
+
+      <div class="tabview" data-view="capital" style="display:none;">
+        <div class="panel">
+          <h3>&gt; Initiate Data Injection: Capital Log</h3>
+          <div class="hint">Asset purchases and maintenance, business-wide. Backfill as many entries as you need.</div>
+          <div id="capitalRows"></div>
+          <div id="capitalError"></div>
+          <div class="btn-row"><button class="btn" id="capitalAddRow">+ APPEND ROW</button><button class="btn btn-glow violet" id="capitalSave">EXECUTE INJECTION &gt;&gt;</button></div>
+        </div>
+        <div class="panel"><h3>Stream Log</h3><div class="stream-list" id="capitalList"></div></div>
+      </div>
+
+      <div class="tabview" data-view="station2" style="display:none;">
+        <div class="panel">
+          <h3>&gt; Station 2 Stream (Read-Only)</h3>
+          <div class="hint">Entries injected by the Station 2 node. Master cannot edit this log — Station 2 controls its own data.</div>
+          <div class="stream-list" id="station2List"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
