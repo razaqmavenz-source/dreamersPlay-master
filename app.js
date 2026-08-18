@@ -298,3 +298,52 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').catch((e)=> console.warn('service worker registration failed', e));
   });
 }
+// ===============================
+// PWA INSTALLATION
+// ===============================
+
+let deferredInstallPrompt = null;
+
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+
+  deferredInstallPrompt = event;
+
+  if (installBtn) {
+    installBtn.style.display = 'inline-block';
+  }
+});
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    deferredInstallPrompt.prompt();
+
+    const result = await deferredInstallPrompt.userChoice;
+
+    if (result.outcome === 'accepted') {
+      console.log('dreamersPlay installation accepted');
+    } else {
+      console.log('dreamersPlay installation dismissed');
+    }
+
+    deferredInstallPrompt = null;
+    installBtn.style.display = 'none';
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  console.log('dreamersPlay installed successfully');
+
+  if (installBtn) {
+    installBtn.style.display = 'none';
+  }
+
+  deferredInstallPrompt = null;
+});
