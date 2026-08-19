@@ -293,11 +293,6 @@ function renderAll(){
   }
 }
 
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('sw.js').catch((e)=> console.warn('service worker registration failed', e));
-  });
-}
 // ===============================
 // PWA INSTALLATION
 // ===============================
