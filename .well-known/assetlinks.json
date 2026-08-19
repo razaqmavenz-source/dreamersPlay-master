@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.dreamersplay.app",
+      "sha256_cert_fingerprints": [
+        "8A:33:BF:26:8F:3D:F1:DE:E4:3B:F7:2A:E7:98:9D:64:AB:0C:4E:81:46:2B:04:F5:05:0E:2D:2D:71:FE:6F:D6"
+      ]
+    }
+  }
+]
