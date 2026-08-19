@@ -2,12 +2,34 @@
   "name": "DreamersPlay",
   "short_name": "DreamersPlay",
   "description": "DreamersPlay Gaming Station",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#05070E",
 "theme_color": "#05070E",
+"categories": [
+  "games",
+  "entertainment"
+],
+"screenshots": [
+  {
+    "src": "./screenshots/screenshot-dashboard.png",
+    "sizes": "927x1773",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "DreamersPlay dashboard"
+  },
+  {
+    "src": "./screenshots/screenshot-station.png",
+    "sizes": "1358x682",
+    "type": "image/png",
+    "form_factor": "wide",
+    "label": "DreamersPlay station management"
+  }
+],
+
   "icons": [
     {
       "src": "./icons/icon-192-1.png",
@@ -28,4 +50,5 @@
       "purpose": "maskable"
     }
   ]
+
 }
