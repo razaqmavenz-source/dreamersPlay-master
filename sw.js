@@ -1,14 +1,14 @@
-const CACHE_NAME = 'dreamersplay-master-v2';
-
+const CACHE_NAME = 'dreamersplay-master-v3';
 const APP_SHELL = [
   './',
   './index.html',
   './app.js',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png'
+  './icons/icon-192-1.png',
+  './icons/icon-512-1.png',
+  './icons/icon-maskable-512-1.png'
 ];
+
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

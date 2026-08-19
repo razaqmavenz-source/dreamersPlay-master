@@ -1,28 +1,28 @@
 {
-  "name": "dreamersPlay — Master",
-  "short_name": "dreamersPlay",
-  "description": "Capital, revenue, and expense data stream — master node.",
-  "start_url": "./index.html",
+  "name": "DreamersPlay",
+  "short_name": "DreamersPlay",
+  "description": "DreamersPlay Gaming Station",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "background_color": "#05070E",
-  "theme_color": "#05070E",
+"theme_color": "#05070E",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icons/icon-192-1.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icons/icon-512-1.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-maskable-512.png",
+      "src": "./icons/icon-maskable-512-1.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
